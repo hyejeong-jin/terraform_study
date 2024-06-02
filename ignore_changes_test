@@ -31,6 +31,22 @@ resource "local_file" "def" {
   filename = "${path.module}/def.txt"
 }
 
+resource "local_file" "step7" {
+  content = ""
+  filename = "${path.module}/step7.txt"
+
+  lifecycle {
+    postcondition {
+      condition = self.content != ""
+      error_message = "content cannot empty"
+    }
+  }
+}
+
+output "step7_content"{
+  value = local_file.step7.id
+}
+
 // resource "aws_instance" "web" {
 //   ami = "ami-a1b2c3d4"
 //   instance_type = "t2.micro"
