@@ -9,3 +9,17 @@ output "file_id" {
 output "file_abspath" {
   value = abspath(local_file.abc.filename)
 }
+
+// 출력 결과
+// Outputs:
+
+// file_abspath = "/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start/abc.txt"
+// file_id = "6367c48dd193d56ea7b0baad25b19455e529f5ee"
+// hyejeong@ITK-20220922XDU:/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start$ terraform output
+// file_abspath = "/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start/abc.txt"
+// file_id = "6367c48dd193d56ea7b0baad25b19455e529f5ee"
+// hyejeong@ITK-20220922XDU:/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start$ terraform output file_id
+// "6367c48dd193d56ea7b0baad25b19455e529f5ee"
+// hyejeong@ITK-20220922XDU:/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start$ terraform output -raw file_id
+// 6367c48dd193d56ea7b0baad25b19455e529f5eehyejeong@ITK-20220922XDU:/mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start$ terraform output -raw file_abspath
+// /mnt/c/Users/Administrator/Desktop/진진/스터디/테라폼으로_시작하는_IaC/workspace/03.start/abc.txt
