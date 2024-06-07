@@ -26,3 +26,47 @@ def-a.txt
 def-b.txt
 def-c.txt
   본문 내용 같음
+
+
+----------------------------------------------------------------------------------------------------------
+variable "names" {
+  type = list(string)
+  default = ["a","b"]
+}
+
+output "A_upper_value" {
+  value = [for v in var.names: upper(v)]
+}
+
+output "B_index_and_value" {
+  value = [for i, v in var.names: "${i} is ${v}"]
+}
+
+output "C_make_object" {
+  value = {for v in var.names: v => upper(v)}
+}
+
+output "D_with_filter" {
+  value = [for v in var.names: upper(v) if v != "a"]
+}
+
+## 출력 결과
+Apply complete! Resources: 0 added, 0 changed, 1 destroyed.
+
+Outputs:
+
+A_upper_value = [
+  "A",
+  "B",
+]
+B_index_and_value = [
+  "0 is a",
+  "1 is b",
+]
+C_make_object = {
+  "a" = "A"
+  "b" = "B"
+}
+D_with_filter = [
+  "B",
+]
