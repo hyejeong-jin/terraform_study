@@ -1,0 +1,50 @@
+variable "members" {
+  type = map(object({
+    role = string
+  }))
+  default = {
+    ab = {role = "member", group = "dev"}
+    cd = {role = "admin", group = "dev"}
+    ef = {role = "member", group = "ops"}
+  }
+}
+
+output "A_to_tuple" {
+  value = [for k, v in var.members: "${k} is ${v.role}"]
+}
+
+output "B_get_only_role" {
+  value = {
+    for name, user in var.members: name => user.role 
+    if user.role == "admin"
+  }
+}
+
+output "C_group" {
+  value = {
+    for name, user in var.members: user.role => name...
+  }
+}
+
+## 출력 결과
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+A_to_tuple = [
+  "ab is member",
+  "cd is admin",
+  "ef is member",
+]
+B_get_only_role = {
+  "cd" = "admin"
+}
+C_group = {
+  "admin" = [
+    "cd",
+  ]
+  "member" = [
+    "ab",
+    "ef",
+  ]
+}
