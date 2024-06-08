@@ -1,0 +1,42 @@
+ # 1. 리소스 내에 블록 선언을 반복적으로 하는 경우
+// data "archive_file" "dotfiles"{
+//   type = "zip"
+//   output_path = "${path.module}/dotfiles.zip"
+
+//   source {
+//     content = "hello a"
+//     filename = "${path.module}/a.txt"
+//   }
+
+//   source {
+//     content = "hello b"
+//     filename = "${path.module}/b.txt"
+//   }
+
+//   source {
+//     content = "hello c"
+//     filename = "${path.module}/c.txt"
+//   }
+// }
+
+# 2. 리소스 내에 반복적으로 선언되는 구성을 dynamic 블록으로 재구성
+variable "names" {
+  default = {
+    a = "hello a"
+    b = "hello b"
+    c = "hello c"
+  }
+}
+
+data "archive_file" "dotfiles" {
+  type = "zip"
+  output_path = "${path.module}/dotfiles.zip"
+
+  dynamic "source" {
+    for_each = var.names
+    content {
+      content = source.value
+      filename = "${path.module}/${source.key}.txt"
+    }
+  }
+}
